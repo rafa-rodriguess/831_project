@@ -1,0 +1,17 @@
+{
+  "status": "COMPLETE",
+  "run_at": "2026-04-10T02:31:24.123620+00:00",
+  "dry_run": false,
+  "workers": 5,
+  "model": "claude-opus-4-5",
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "n_total_in_csv": 1300,
+  "n_new_responses": 815,
+  "n_skipped": 970,
+  "n_errors": 0,
+  "elapsed_seconds": 9814.91,
+  "responses_dir": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/llm_responses",
+  "aggregate_csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/llm_survey_responses.csv",
+  "errors": []
+}

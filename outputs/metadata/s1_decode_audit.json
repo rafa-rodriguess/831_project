@@ -1,0 +1,73 @@
+{
+  "script": "S1_decode_and_normalize.py",
+  "run_at": "2026-04-09T17:53:12.251802+00:00",
+  "status": "COMPLETE",
+  "zenodo": {
+    "Motivation_decode": {
+      "direction": "unordered",
+      "corr_with_exam": -0.002,
+      "mapping": {
+        "0": "High",
+        "1": "Low",
+        "2": "Medium"
+      },
+      "note": "unordered: fallback alphabetical ['High', 'Low', 'Medium']"
+    },
+    "StressLevel_decode": {
+      "direction": "unordered",
+      "corr_with_exam": -0.0322,
+      "mapping": {
+        "0": "High",
+        "1": "Low",
+        "2": "Medium"
+      },
+      "note": "unordered: fallback alphabetical ['High', 'Low', 'Medium']"
+    },
+    "Resources_decode": {
+      "direction": "unordered",
+      "corr_with_exam": 0.003,
+      "mapping": {
+        "0": "High",
+        "1": "Low",
+        "2": "Medium"
+      },
+      "note": "unordered: fallback alphabetical ['High', 'Low', 'Medium']"
+    },
+    "FinalGrade_decode": {
+      "direction": "descending",
+      "corr_with_exam": -0.9683,
+      "mapping": {
+        "0": "Distinction",
+        "1": "Merit",
+        "2": "Pass",
+        "3": "Fail"
+      }
+    },
+    "LearningStyle_decode": {
+      "mapping": {
+        "0": "Auditory",
+        "1": "Kinesthetic",
+        "2": "ReadWrite",
+        "3": "Visual"
+      }
+    },
+    "output_shape": [
+      14003,
+      32
+    ]
+  },
+  "kaggle": {
+    "output_shape": [
+      1300,
+      25
+    ]
+  },
+  "bridge_cols": [
+    "attendance_norm",
+    "assignment_norm",
+    "exam_norm",
+    "motivation_norm",
+    "stress_norm",
+    "discussion_norm"
+  ]
+}

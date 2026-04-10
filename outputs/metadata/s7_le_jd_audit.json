@@ -1,0 +1,77 @@
+{
+  "status": "COMPLETE",
+  "elapsed_s": 2.1,
+  "enrollment_level": {
+    "rows": 1300,
+    "cols": 63,
+    "output": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/le_jd_enrollment.csv"
+  },
+  "weekly_level": {
+    "rows": 48042,
+    "cols": 29,
+    "output": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/le_jd_weekly.csv"
+  },
+  "meta_inference_distribution": {
+    "Convergence": 551,
+    "Discordance": 426,
+    "Expansion": 323
+  },
+  "le_jd_columns": {
+    "Col1_Behavioral_Indicators": [
+      "behavioral_profile",
+      "total_clicks_sum",
+      "total_clicks_mean",
+      "active_days_mean",
+      "log_clicks_mean",
+      "click_intensity_mean",
+      "recency_last",
+      "streak_max",
+      "cumulative_clicks_final",
+      "assessment_score_mean",
+      "submission_timeliness_mean",
+      "has_assessment_weeks",
+      "n_weeks"
+    ],
+    "Col2_Latent_State": [
+      "engagement_state_modal"
+    ],
+    "Col3_Mechanism": [
+      "dominant_themes",
+      "Q1-Q24"
+    ],
+    "Col4_Meta_Inference": [
+      "meta_inference_verdict",
+      "meta_inference_rationale"
+    ],
+    "Context": [
+      "persona_id",
+      "persona_name",
+      "persona_archetype_label",
+      "gender",
+      "age",
+      "learning_style",
+      "risk_level",
+      "final_grade",
+      "engagement_level",
+      "motivation_level",
+      "stress_level_label",
+      "intervention_type",
+      "enrollment_id",
+      "code_module",
+      "code_presentation",
+      "age_band",
+      "gender_oulad",
+      "final_result",
+      "match_score",
+      "result_match",
+      "engagement_match",
+      "overall_engagement_self_assessment"
+    ]
+  },
+  "sources": {
+    "quali": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/llm_survey_responses.csv",
+    "bridge": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/persona_enrollment_bridge.csv",
+    "personas": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/student_personas.csv",
+    "quant": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/engagement_panel_weekly.csv"
+  }
+}

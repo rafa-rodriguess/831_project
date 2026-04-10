@@ -1,0 +1,90 @@
+{
+  "status": "COMPLETE",
+  "n_personas": 1300,
+  "n_columns": 38,
+  "columns": [
+    "persona_id",
+    "zenodo_row_idx",
+    "kaggle_row_idx",
+    "bridge_distance",
+    "zenodo_cluster_id",
+    "kaggle_cluster_id",
+    "persona_archetype_label",
+    "age",
+    "gender",
+    "learning_style",
+    "internet_access",
+    "extracurricular",
+    "uses_edutech",
+    "resources_availability",
+    "study_hours_per_week",
+    "online_courses_enrolled",
+    "attendance_pct",
+    "assignment_completion_pct",
+    "exam_score_harmonized",
+    "final_grade",
+    "risk_level",
+    "avg_response_time_hours",
+    "assignment_score",
+    "login_frequency",
+    "video_watch_time_min",
+    "discussion_posts",
+    "peer_interaction_count",
+    "task_completion_rate",
+    "engagement_level",
+    "motivation_level",
+    "motivation_index",
+    "stress_level_label",
+    "stress_score",
+    "anxiety_score",
+    "resilience_score",
+    "post_intervention_mood",
+    "dominant_emotion",
+    "intervention_type"
+  ],
+  "nan_total": 0,
+  "archetype_distribution": {
+    "Disengaged Drifter": 428,
+    "Resilient Climber": 393,
+    "Steady Performer": 251,
+    "Routine Complier": 85,
+    "Flourishing Achiever": 81,
+    "Crisis Learner": 32,
+    "Overwhelmed Striver": 30
+  },
+  "stats": {
+    "attendance_pct": {
+      "min": 0.4,
+      "max": 99.92,
+      "mean": 49.6742
+    },
+    "assignment_completion_pct": {
+      "min": 0.06,
+      "max": 100.0,
+      "mean": 49.8604
+    },
+    "exam_score_harmonized": {
+      "min": 40.13,
+      "max": 100.0,
+      "mean": 69.6229
+    },
+    "motivation_index": {
+      "min": 1.0,
+      "max": 5.0,
+      "mean": 2.9654
+    },
+    "stress_score": {
+      "min": 1.0,
+      "max": 5.0,
+      "mean": 3.0108
+    },
+    "bridge_distance": {
+      "min": 0.0123,
+      "max": 0.3727,
+      "mean": 0.2161
+    }
+  },
+  "outputs": {
+    "student_personas": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/student_personas.csv"
+  }
+}

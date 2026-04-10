@@ -1,0 +1,224 @@
+{
+  "P0": {
+    "run_id": "1c37d379799d4440a20a32953fa64b38",
+    "stage": "P0",
+    "timestamp": "2026-04-09T12:01:44.592231-03:00",
+    "status": "completed",
+    "source_files": {
+      "studentVle": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/studentVle.csv",
+      "studentInfo": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/studentInfo.csv",
+      "studentAssessment": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/studentAssessment.csv",
+      "assessments": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/assessments.csv",
+      "courses": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/courses.csv"
+    },
+    "output_dirs": {
+      "output_dir": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs",
+      "data_dir": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data",
+      "metadata_dir": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/metadata"
+    },
+    "packages": {
+      "pandas": "2.3.3",
+      "numpy": "2.0.2",
+      "duckdb": "1.4.4",
+      "pyarrow": "21.0.0",
+      "scikit-learn": "1.5.2"
+    }
+  },
+  "P1": {
+    "stage": "P1",
+    "timestamp": "2026-04-09T12:03:23.028426-03:00",
+    "status": "completed",
+    "duckdb_path": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/engagement.duckdb",
+    "tables": {
+      "raw_student_vle": {
+        "csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/studentVle.csv",
+        "n_rows": 10655280,
+        "n_columns": 6,
+        "columns": [
+          "code_module",
+          "code_presentation",
+          "id_student",
+          "id_site",
+          "date",
+          "sum_click"
+        ],
+        "contract_checks": [
+          "sum_click >= 0"
+        ],
+        "violations_found": 0
+      },
+      "raw_student_info": {
+        "csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/studentInfo.csv",
+        "n_rows": 32593,
+        "n_columns": 12,
+        "columns": [
+          "code_module",
+          "code_presentation",
+          "id_student",
+          "gender",
+          "region",
+          "highest_education",
+          "imd_band",
+          "age_band",
+          "num_of_prev_attempts",
+          "studied_credits",
+          "disability",
+          "final_result"
+        ],
+        "contract_checks": [
+          "num_of_prev_attempts >= 0",
+          "studied_credits > 0"
+        ],
+        "violations_found": 0
+      },
+      "raw_student_assessment": {
+        "csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/studentAssessment.csv",
+        "n_rows": 173912,
+        "n_columns": 5,
+        "columns": [
+          "id_assessment",
+          "id_student",
+          "date_submitted",
+          "is_banked",
+          "score"
+        ],
+        "contract_checks": [
+          "score >= 0 OR score IS NULL",
+          "score <= 100 OR score IS NULL"
+        ],
+        "violations_found": 0
+      },
+      "raw_assessments": {
+        "csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/assessments.csv",
+        "n_rows": 206,
+        "n_columns": 6,
+        "columns": [
+          "code_module",
+          "code_presentation",
+          "id_assessment",
+          "assessment_type",
+          "date",
+          "weight"
+        ],
+        "contract_checks": [],
+        "violations_found": 0
+      },
+      "raw_courses": {
+        "csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content/courses.csv",
+        "n_rows": 22,
+        "n_columns": 3,
+        "columns": [
+          "code_module",
+          "code_presentation",
+          "module_presentation_length"
+        ],
+        "contract_checks": [
+          "module_presentation_length > 0"
+        ],
+        "violations_found": 0
+      }
+    }
+  },
+  "P2": {
+    "stage": "P2",
+    "timestamp": "2026-04-09T12:04:15.919748-03:00",
+    "status": "completed",
+    "panel_base_rows": 1212577,
+    "notes": "Full enrollment × week grid with zero-click weeks included."
+  },
+  "P3": {
+    "stage": "P3",
+    "timestamp": "2026-04-09T12:05:18.425787-03:00",
+    "status": "completed",
+    "panel_indicators_rows": 1212577,
+    "panel_indicators_n_enrollments": 32593,
+    "columns_added": [
+      "log_clicks",
+      "click_intensity",
+      "cumulative_clicks",
+      "recency",
+      "streak",
+      "engagement_state"
+    ]
+  },
+  "P4": {
+    "stage": "P4",
+    "timestamp": "2026-04-09T12:06:08.536843-03:00",
+    "status": "completed",
+    "panel_with_assessment_rows": 1212577,
+    "columns_added": [
+      "assessment_score",
+      "submission_timeliness",
+      "has_assessment_this_week"
+    ],
+    "notes": "assessment_score and submission_timeliness are NULL for weeks without a submitted assessment."
+  },
+  "P5": {
+    "stage": "P5",
+    "timestamp": "2026-04-09T12:06:52.562856-03:00",
+    "status": "completed",
+    "panel_with_demographics_rows": 1212577,
+    "orphan_rows": 0,
+    "columns_added": [
+      "age_band",
+      "gender",
+      "highest_education",
+      "imd_band",
+      "num_of_prev_attempts",
+      "studied_credits",
+      "final_result"
+    ]
+  },
+  "P6": {
+    "stage": "P6",
+    "timestamp": "2026-04-09T12:08:10.463224-03:00",
+    "status": "completed",
+    "output_csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/engagement_panel_weekly.csv",
+    "total_rows": 1212577,
+    "unique_enrollments": 32593,
+    "unique_weeks": 39,
+    "engagement_state_dist": {
+      "low": 67.46,
+      "medium": 16.28,
+      "high": 16.26
+    },
+    "final_result_dist": {
+      "Pass": 38.04,
+      "Withdrawn": 31.14,
+      "Fail": 21.51,
+      "Distinction": 9.3
+    },
+    "columns": [
+      "enrollment_id",
+      "id_student",
+      "code_module",
+      "code_presentation",
+      "week",
+      "total_clicks",
+      "active_days",
+      "log_clicks",
+      "click_intensity",
+      "recency",
+      "streak",
+      "cumulative_clicks",
+      "assessment_score",
+      "submission_timeliness",
+      "has_assessment_this_week",
+      "age_band",
+      "gender",
+      "highest_education",
+      "imd_band",
+      "num_of_prev_attempts",
+      "studied_credits",
+      "final_result",
+      "engagement_state"
+    ]
+  },
+  "SUMMARY": {
+    "pipeline_status": "COMPLETE",
+    "completed_at": "2026-04-09T12:08:10.464424-03:00",
+    "final_output": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/engagement_panel_weekly.csv",
+    "total_rows": 1212577,
+    "unique_enrollments": 32593
+  }
+}

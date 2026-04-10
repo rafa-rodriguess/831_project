@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-04-09T12:01:44.546198-03:00",
+  "python_version": "3.9.13",
+  "platform": "macOS-26.3.1-arm64-arm-64bit",
+  "python_executable": "/Users/rafars/.pyenv/versions/3.9.13/bin/python",
+  "seed": 42,
+  "pandas_version": "2.3.3",
+  "numpy_version": "2.0.2",
+  "duckdb_version": "1.4.4",
+  "pyarrow_version": "21.0.0",
+  "scikit_learn_version": "1.5.2",
+  "run_id": "1c37d379799d4440a20a32953fa64b38",
+  "proposal_root": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper",
+  "oulad_data_dir": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/content"
+}

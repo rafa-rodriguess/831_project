@@ -1,0 +1,141 @@
+{
+  "status": "COMPLETE",
+  "n_personas": 1300,
+  "n_questions": 24,
+  "strategy": "one-shot: all 24 questions in a single API call per persona",
+  "questions": [
+    {
+      "id": "Q1",
+      "text": "Can you describe how you usually organized your study routine during the course?"
+    },
+    {
+      "id": "Q2",
+      "text": "Did you tend to study at regular times each week, or did your pattern vary depending on deadlines or other demands?"
+    },
+    {
+      "id": "Q3",
+      "text": "What usually prompted you to log into the LMS?"
+    },
+    {
+      "id": "Q4",
+      "text": "Were there moments when using the LMS became part of your normal routine? If so, how did that happen?"
+    },
+    {
+      "id": "Q5",
+      "text": "Which LMS activities or resources felt most useful to your learning? Why?"
+    },
+    {
+      "id": "Q6",
+      "text": "Were there resources you often ignored, delayed, or used only minimally? Why?"
+    },
+    {
+      "id": "Q7",
+      "text": "What made an activity feel worth your time?"
+    },
+    {
+      "id": "Q8",
+      "text": "Did optional activities feel different from required ones? In what way?"
+    },
+    {
+      "id": "Q9",
+      "text": "Did you ever study in ways that were not visible in the LMS, such as using downloaded files, notes, textbooks, or external resources?"
+    },
+    {
+      "id": "Q10",
+      "text": "Can you describe situations in which you were learning or studying, but your LMS activity would not show much evidence of that?"
+    },
+    {
+      "id": "Q11",
+      "text": "Did you ever access materials once and then continue studying them offline?"
+    },
+    {
+      "id": "Q12",
+      "text": "Were there moments when it became harder to engage with the course? What was happening at that time?"
+    },
+    {
+      "id": "Q13",
+      "text": "Did workload, confusion, fatigue, or competing responsibilities affect how you used the LMS?"
+    },
+    {
+      "id": "Q14",
+      "text": "Were there times when you accessed materials but did not feel meaningfully engaged with them?"
+    },
+    {
+      "id": "Q15",
+      "text": "Did you ever postpone or avoid certain activities even when you knew they were important? Why?"
+    },
+    {
+      "id": "Q16",
+      "text": "How did deadlines influence the way you used the LMS?"
+    },
+    {
+      "id": "Q17",
+      "text": "Did feedback affect how or when you engaged with the course?"
+    },
+    {
+      "id": "Q18",
+      "text": "How did the structure of the course influence your participation?"
+    },
+    {
+      "id": "Q19",
+      "text": "Were there aspects of the course design that made engagement easier or harder?"
+    },
+    {
+      "id": "Q20",
+      "text": "Sometimes students show high activity in the LMS but submit little work. What do you think might explain that?"
+    },
+    {
+      "id": "Q21",
+      "text": "Sometimes students show low activity in the LMS but still perform reasonably well. Does that reflect anything from your experience?"
+    },
+    {
+      "id": "Q22",
+      "text": "What do you think a course log can show accurately about engagement, and what do you think it misses?"
+    },
+    {
+      "id": "Q23",
+      "text": "What does 'being engaged' in a course mean to you?"
+    },
+    {
+      "id": "Q24",
+      "text": "Is there anything important about your engagement with the course that LMS data would not show?"
+    }
+  ],
+  "json_schema_fields": [
+    "persona_id",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "Q14",
+    "Q15",
+    "Q16",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20",
+    "Q21",
+    "Q22",
+    "Q23",
+    "Q24",
+    "overall_engagement_self_assessment",
+    "dominant_themes"
+  ],
+  "prompt_length_stats": {
+    "min": 6191,
+    "mean": 6210.6,
+    "max": 6233
+  },
+  "outputs": {
+    "prompts_csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/student_personas_with_prompts.csv"
+  }
+}

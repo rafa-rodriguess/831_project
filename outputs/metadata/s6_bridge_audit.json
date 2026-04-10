@@ -1,0 +1,24 @@
+{
+  "status": "COMPLETE",
+  "total_personas": 1300,
+  "matched": 1300,
+  "unmatched": 0,
+  "unmatched_ids": [],
+  "below_threshold_relaxed": 0,
+  "top_n": 10,
+  "min_score_threshold": 0.4,
+  "bridge_rows": 13000,
+  "elapsed_s": 19.9,
+  "score_stats": {
+    "mean": 0.9397,
+    "min": 0.7855,
+    "max": 0.9999,
+    "p25": 0.8909,
+    "p75": 0.993
+  },
+  "below_threshold_details": [],
+  "outputs": {
+    "bridge_csv": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/persona_enrollment_bridge.csv",
+    "audit_json": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/metadata/s6_bridge_audit.json"
+  }
+}

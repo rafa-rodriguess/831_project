@@ -1,0 +1,48 @@
+{
+  "status": "COMPLETE",
+  "zenodo_rows": 14003,
+  "kaggle_rows": 1300,
+  "n_personas": 1300,
+  "bridge_cols": [
+    "attendance_norm",
+    "assignment_norm",
+    "exam_norm",
+    "motivation_norm",
+    "stress_norm",
+    "discussion_norm"
+  ],
+  "zenodo_cluster": {
+    "K": 3,
+    "sizes": {
+      "0": 4259,
+      "1": 5519,
+      "2": 4225
+    },
+    "elbow_k": 4,
+    "sil_k": 3
+  },
+  "kaggle_cluster": {
+    "K": 5,
+    "sizes": {
+      "0": 284,
+      "1": 305,
+      "2": 311,
+      "3": 63,
+      "4": 337
+    },
+    "elbow_k": 5,
+    "sil_k": 5
+  },
+  "nn_matching": {
+    "metric": "euclidean",
+    "unique_zenodo_matched": 1106,
+    "distance_min": 0.012297,
+    "distance_mean": 0.2161,
+    "distance_max": 0.372719
+  },
+  "outputs": {
+    "zenodo_clustered": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/zenodo_clustered.csv",
+    "kaggle_clustered": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/kaggle_clustered.csv",
+    "persona_pairs": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/persona_pairs.csv"
+  }
+}
