@@ -1,246 +1,149 @@
-# Latent Engagement Joint Display (LE-JD): Artifact Definition, Data Mapping, and Construction Guide
-
-> **Status:** Files fully assembled as of April 2026.
-> This document describes the LE-JD artifact, maps every CSV column to its role in the artifact, and provides step-by-step guidance on how to reproduce it from the pipeline outputs.
+# Latent Engagement Joint Display (LE-JD): Artifact Definition and Construction Guide
 
 ---
 
-## Quick Reference — Output Files
+## 1. Artifact Definition
 
-| File | Rows | Cols | Granularity | Purpose |
-|---|---|---|---|---|
-| `outputs/data/synthetic/le_jd_enrollment.csv` | 1,300 | 65 | 1 row per persona (unique enrollment) | Primary LE-JD artifact |
-| `outputs/data/synthetic/le_jd_weekly.csv` | 48,241 | 29 | 1 row per persona × week | Temporal LE-JD for trajectory analysis |
-| `outputs/data/synthetic/persona_enrollment_bridge.csv` | 1,300 | 9 | 1 row per persona | Cross-strand link (greedy unique assignment) |
-| `outputs/metadata/s7_le_jd_audit.json` | — | — | — | Build audit and column manifest |
+*Reproduced verbatim from `proposal.md`, §6.4.*
 
-**Assembly script:** `next_proposal_paper/src_syntetic/S7_le_jd_assembly.py`
+A central contribution of this study is the development of a unifying artifact termed **Latent Engagement Joint Display (LE-JD)**.
 
-> **Data integrity guarantee:** Each of the 1,300 personas is linked to a **unique OULAD enrollment** via a greedy unique assignment algorithm in S6. This ensures Col 1 (Behavioral Indicators) represents a distinct student trajectory per persona, making the quant–quali comparison in the LE-JD genuinely independent. 18 personas for whom no free enrollment could be found within the top-30 candidates received their best available match, flagged with `shared_enrollment = True` in the bridge and LE-JD.
+The LE-JD extends the earlier idea of Latent Engagement Mapping by explicitly grounding the artifact in the mixed methods literature on **joint displays**. Rather than serving only as a summary table, the LE-JD is conceived as a structured analytical device for representing integration, aligning qualitative and quantitative evidence, and supporting the generation of meta-inferences. This approach follows the view that joint displays are not merely reporting tools, but also frameworks that help researchers organize data, compare findings, and identify integrated interpretations (Guetterman et al., 2015; Guetterman et al., 2021).
 
----
+The artifact is designed according to several methodological principles emphasized in the literature. First, integration must be explicit rather than implied. Second, the artifact should facilitate the identification of meta-inferences rather than simply place qualitative and quantitative findings side by side. Third, qualitative and quantitative evidence should be represented at a comparable level of aggregation, since direct comparison between raw qualitative quotes and aggregated quantitative statistics can weaken interpretability and the coherence of integration (Guetterman et al., 2021). Finally, the display should improve clarity rather than introduce unnecessary visual or conceptual complexity.
 
-## 1. The Artifact: Latent Engagement Joint Display (LE-JD)
+Accordingly, the LE-JD aligns four core elements for each analytical unit:
+- Behavioral indicators derived from OULAD
+- Latent engagement states inferred from the quantitative model
+- Qualitative mechanisms derived from thematic analysis
+- Meta-inferences generated through integration
 
-The **Latent Engagement Joint Display (LE-JD)** is the central integrative artifact of this study. It is conceived as a structured analytical device—not merely a reporting table—that explicitly aligns quantitative and qualitative evidence to produce mixed methods meta-inferences.
+A simplified representation of the artifact is shown below:
 
-The LE-JD is organized around **four analytical columns**, each representing a distinct level of evidence:
-
-| Column | Level | Source |
-|---|---|---|
-| **Behavioral Indicators** | Observable | Quantitative strand — directly from CSV |
-| **Latent Engagement State** | Inferred | Quantitative strand — DBN output |
-| **Mechanism** | Explanatory | Qualitative strand — thematic analysis of interviews |
-| **Meta-Inference** | Integrated | Integration process — convergence, expansion, or discordance |
-
-The artifact is designed according to four methodological principles (Guetterman et al., 2021):
-1. Integration must be **explicit**, not implied
-2. The display must facilitate **meta-inferences**, not just side-by-side presentation
-3. Both strands must be represented at a **comparable level of aggregation**
-4. The display must **reduce cognitive burden**, not introduce unnecessary complexity
-
-The LE-JD functions both as a **reporting mechanism** (presenting integrated findings) and as an **analytical tool** (the act of populating it generates the meta-inferences).
-
----
-
-## 2. Structure of the LE-JD
-
-Each row of the LE-JD represents a **case unit**: an enrollment-period (a student in a given module, at a given point in time). Rows may be aggregated at different granularities depending on the analytical purpose:
-
-- **Week-level**: for temporal pattern analysis (e.g., drop-off detection)
-- **Phase-level**: for trajectory segmentation (e.g., early, mid, late course)
-- **Enrollment-level**: for overall profile comparison
-
-A simplified prototype of the artifact:
-
-| Student | Week | Behavioral Profile | Latent State | Mechanism | Meta-Inference |
-|---|---|---|---|---|---|
+| Student | Week | Behavioral Indicators | Latent Engagement | Mechanism | Meta-Inference |
+|--------|------|----------------------|------------------|-----------|----------------|
 | S1 | W3 | High clicks, low submission | Medium | Cognitive overload | Engagement without effective processing |
 | S2 | W5 | No activity, high recency | Low | Low perceived value | Disengagement driven by utility perception |
 | S3 | W2–6 | Stable activity, high streak | High | Habit formation | Sustained engagement through routine |
 
+In methodological terms, the LE-JD functions as a **hybrid joint display**. It incorporates features of side-by-side displays by aligning qualitative and quantitative findings, features of statistics-by-themes displays by relating behavioral indicators to qualitative mechanisms, and features of model-based displays by introducing latent engagement as an interpretive layer. This hybrid structure is consistent with the recent evolution of joint displays toward more creative and analytically powerful visual formats (Guetterman et al., 2021).
+
+A key refinement in the LE-JD is the deliberate alignment of aggregation levels across strands. Quantitative findings are represented through aggregated behavioral indicators and inferred latent states, while qualitative findings are represented through themes or mechanisms rather than isolated raw quotes. Quotes may still appear in supporting materials or as illustrative evidence, but the main artifact prioritizes thematic aggregation in order to strengthen comparability and interpretive fit. This design choice is directly supported by recommendations from the methodological review of visual joint displays, which found that integration is stronger when both strands are displayed at a consistent level of aggregation (Guetterman et al., 2021).
+
+The LE-JD is also intended to support visual augmentation. In addition to the tabular display, the artifact may incorporate temporal trajectory plots, state-transition diagrams, or conceptual figures that link mechanisms to behavioral indicators. Such visual extensions are justified by the methodological literature, which argues that visual joint displays can reduce cognitive burden, communicate complex integrated findings more effectively, and support analytic reasoning during the integration process (Guetterman et al., 2021).
+
+Most importantly, the LE-JD is not only a means of presenting results after analysis is complete. It also functions as a tool for conducting integration. In the process of deciding what to include, how to align the strands, and how to interpret convergence, divergence, or expansion, the artifact actively supports the development of mixed methods meta-inferences. In this sense, it is both an analytical framework and a reporting mechanism.
+
 ---
 
-## 3. How the Quantitative Data Constructs the LE-JD
+## 2. Input Tables
 
-### 3.1 Source File
+The LE-JD is assembled by `S7_le_jd_assembly.py` from four input files. The diagram below shows the tables and their join relationships.
 
-**`outputs/engagement_panel_weekly.csv`**
-- 1,212,577 rows — one per enrollment × week
-- 32,593 unique enrollments
-- 39 unique weeks (0–38)
-- 23 columns
+```mermaid
+erDiagram
 
-### 3.2 Column 1 — Behavioral Indicators (Observable Layer)
+    ENGAGEMENT_PANEL_WEEKLY {
+        string  enrollment_id       PK
+        int     week                PK
+        float   log_clicks
+        float   click_intensity
+        int     recency
+        int     streak
+        string  engagement_state
+        string  final_result
+    }
 
-These columns feed directly into the **Behavioral Indicators** column of the LE-JD. They are displayed as an aggregated behavioral profile per case unit, not as raw individual values.
+    STUDENT_PERSONAS {
+        string  persona_id          PK
+        string  persona_name
+        string  persona_archetype_label
+        string  risk_level
+        string  learning_style
+    }
 
-| CSV Column | Data Type | Range / Values | Role in LE-JD |
-|---|---|---|---|
-| `total_clicks` | float | 0 – 6,991 | Primary activity signal; defines presence or absence of engagement |
-| `active_days` | int | 0 – 7 | Within-week dispersion; distinguishes binge vs. distributed activity |
-| `log_clicks` | float | 0 – 8.85 | Smoothed activity for DBN input; reduces skew from extreme values |
-| `click_intensity` | float | 0 – 1 | Relative intensity vs. peers in the same module/presentation/week |
-| `recency` | int | 0 – 39 | Weeks since last active; captures inactivity duration |
-| `streak` | int | 0 – 39 | Consecutive active weeks; captures habit formation in behavioral trace |
-| `cumulative_clicks` | float | 0 – 23,481 | Cumulative engagement trajectory; drives temporal plots in the artifact |
-| `has_assessment_this_week` | int | 0 / 1 | Flags deadline-driven activity windows |
-| `assessment_score` | int | 0 – 100 (87.75% null) | Academic outcome of engagement; null when no assessment submitted |
-| `submission_timeliness` | int | −174 to +244 days | Deadline management behavior; positive = early, negative = late |
+    LLM_SURVEY_RESPONSES {
+        string  persona_id          PK "FK → STUDENT_PERSONAS"
+        string  dominant_themes
+        string  overall_engagement_self_assessment
+        string  Q1
+        string  Q24
+    }
 
-**Aggregation rule for the LE-JD:** individual columns are collapsed into a **behavioral profile label** (e.g., "High clicks, low submission, early streak") to maintain comparability with the qualitative strand, which operates at theme level. Raw values support the label and appear in supplemental visualizations.
+    PERSONA_ENROLLMENT_BRIDGE {
+        string  persona_id          PK "FK → STUDENT_PERSONAS"
+        string  enrollment_id       FK "FK → ENGAGEMENT_PANEL_WEEKLY"
+        float   match_score
+        bool    shared_enrollment
+    }
 
-### 3.3 Column 2 — Latent Engagement State (Inferred Layer)
+    LE_JD_ENROLLMENT {
+        string  persona_id          PK
+        string  enrollment_id       FK
+        string  behavioral_profile
+        string  engagement_state_modal
+        string  dominant_themes
+        string  meta_inference_verdict
+        string  meta_inference_rationale
+    }
 
-The latent state is **not a column in the CSV**. It is the output of the Dynamic Bayesian Network (DBN) trained on the observable columns above. The CSV supports this column in two ways:
+    LE_JD_WEEKLY {
+        string  persona_id          PK
+        int     week                PK
+        string  enrollment_id       FK
+        string  behavioral_profile_week
+        string  engagement_state
+        string  meta_inference_verdict
+    }
 
-**DBN Input Variables** (columns that enter the DBN as observed nodes):
-
-| CSV Column | Node Type in DBN | Rationale |
-|---|---|---|
-| `log_clicks` | Continuous evidence | Primary behavioral signal |
-| `click_intensity` | Continuous evidence | Contextual normalization |
-| `recency` | Continuous evidence | Captures inactivity dynamics |
-| `streak` | Continuous evidence | Captures persistence dynamics |
-| `active_days` | Continuous evidence | Within-week distribution |
-| `has_assessment_this_week` | Binary evidence | Deadline context |
-| `assessment_score` | Continuous evidence (sparse) | Academic performance signal |
-| `submission_timeliness` | Continuous evidence (sparse) | Behavioral response to deadlines |
-
-**DBN Output (Latent State):** a discrete state per enrollment × week — e.g., `{Disengaged, Low-Engagement, Moderate-Engagement, High-Engagement}`. This state populates Column 2 of the LE-JD.
-
-**Validation baseline:** `engagement_state` (CSV column) is a pre-computed proxy via contextual NTILE(3) on `log_clicks`. It is used to **validate DBN output consistency**, not as the latent state itself.
-
-| CSV Column | Role |
-|---|---|
-| `engagement_state` | Proxy baseline {low, medium, high}; validation reference only |
-
-**Correct flow:**
-
+    STUDENT_PERSONAS          ||--|| PERSONA_ENROLLMENT_BRIDGE : "matched in S6"
+    ENGAGEMENT_PANEL_WEEKLY   ||--o{ PERSONA_ENROLLMENT_BRIDGE : "provides enrollment"
+    PERSONA_ENROLLMENT_BRIDGE ||--|| LE_JD_ENROLLMENT          : "assembled in S7"
+    LLM_SURVEY_RESPONSES      ||--|| LE_JD_ENROLLMENT          : "Col 3 — Mechanism"
+    STUDENT_PERSONAS          ||--o{ LE_JD_ENROLLMENT          : "persona context"
+    ENGAGEMENT_PANEL_WEEKLY   ||--o{ LE_JD_WEEKLY              : "weekly rows"
+    STUDENT_PERSONAS          ||--o{ LE_JD_WEEKLY              : "persona context"
 ```
-CSV observable columns → DBN training → Latent State per row → LE-JD Column 2
-                                                 ↑
-                          engagement_state (CSV) compared here for consistency check
+
+| File | Rows | Produced by | Role in S7 |
+|---|---|---|---|
+| `outputs/engagement_panel_weekly.csv` | 1,212,577 | P0–P6 | Col 1 (behavioral) + Col 2 (engagement state proxy) |
+| `outputs/data/synthetic/student_personas.csv` | 1,300 | S3 | Persona context columns |
+| `outputs/data/synthetic/llm_survey_responses.csv` | 1,300 | S5 | Col 3 (mechanisms, Q1–Q24) |
+| `outputs/data/synthetic/persona_enrollment_bridge.csv` | 1,300 | S6 | Join key — links each persona to one unique OULAD enrollment |
+
+---
+
+## 3. Construction — Step by Step
+
+### Step 0 — Prerequisites
+
+All four input files must exist. Run the pipeline stages in order if any are missing:
+
+```bash
+# Quantitative strand
+python src/P0_foundation.py && python src/P1_ingestion.py && python src/P2_panel_builder.py
+python src/P3_indicators.py && python src/P4_assessment_join.py
+python src/P5_demographics_join.py && python src/P6_export.py
+# → outputs/engagement_panel_weekly.csv
+
+# Synthetic qualitative strand
+python src_syntetic/S0_ingest_external_sources.py
+python src_syntetic/S1_decode_and_normalize.py
+python src_syntetic/S2_cluster_and_map.py
+python src_syntetic/S3_persona_assembly.py
+python src_syntetic/S4_generate_prompts.py
+python src_syntetic/S5_run_llm_survey.py      # requires ANTHROPIC_API_KEY
+# → outputs/data/synthetic/llm_survey_responses.csv
+
+# Bridge (requires both strands above)
+python src_syntetic/S6_persona_enrollment_bridge.py
+# → outputs/data/synthetic/persona_enrollment_bridge.csv  (1,300 × 9)
 ```
 
-### 3.4 Stratification and Case Selection Context
-
-These columns do not appear as LE-JD columns but are essential for **selecting cases**, **stratifying profiles**, and **interpreting meta-inferences** in context.
-
-| CSV Column | Values | Use in LE-JD |
-|---|---|---|
-| `enrollment_id` | 32,593 unique | Row identifier; links quantitative profile to interview participant |
-| `week` | 0 – 38 | Temporal axis for trajectory plots and phase segmentation |
-| `code_module` | AAA–GGG (7 modules) | Stratification by subject area |
-| `code_presentation` | 2013B/J, 2014B/J | Stratification by cohort |
-| `final_result` | Pass / Fail / Withdrawn / Distinction | Outcome lens for interpreting engagement trajectories |
-| `age_band` | 0-35 / 35-55 / 55≤ | Demographic segmentation |
-| `gender` | F / M | Demographic segmentation |
-| `highest_education` | 5 categories | Prior educational capital |
-| `imd_band` | 10 categories (3.41% null) | Socioeconomic context |
-| `num_of_prev_attempts` | 0 – 6 | Experience with the module |
-| `studied_credits` | 30 – 655 | Student workload context |
-
 ---
 
-## 4. Columns 3 and 4 — Qualitative Strand and Integration
-
-### 4.1 Column 3 — Mechanism (Qualitative Strand)
-
-**Source (synthetic phase):** `outputs/data/synthetic/llm_survey_responses.csv`  
-Produced by S5 (`S5_run_llm_survey.py`) — 1,300 Claude-generated persona responses.
-
-| Field | Column in le_jd_enrollment.csv | Description |
-|---|---|---|
-| `dominant_themes` | `dominant_themes` | Pipe-separated engagement themes (e.g., `offline-study\|deadline-driven\|competing-responsibilities`) |
-| `overall_engagement_self_assessment` | `overall_engagement_self_assessment` | Self-reported level: `low / medium / high` |
-| Q1–Q24 | `Q1` … `Q24` | Full narrative responses to engagement survey questions |
-
-**Themes surfaced in the synthetic corpus:**  
-`offline-study`, `deadline-driven`, `resource-constraints`, `habit-formation`, `cognitive-overload`, `low-perceived-value`, `strategic-compliance`, `competing-responsibilities`, `auditory-learning-preference`, `peer-interaction`, `anxiety-driven-activity`
-
-**Future step (real interviews):** in the empirical phase, `dominant_themes` and `Q1–Q24` will be replaced by thematic codes derived from semi-structured interviews with enrolled students. The column schema and meta-inference logic remain identical.
-
-### 4.2 Column 4 — Meta-Inference (Integration Output)
-
-Meta-inference is generated by `meta_inference()` in S7, comparing quantitative and qualitative engagement signals:
-
-| Verdict | Condition | Interpretation |
-|---|---|---|
-| **Convergence** | `engagement_state_modal` == `overall_engagement_self_assessment` | Behavioral LMS data aligns with student experience. Both strands tell the same story. |
-| **Expansion** | self-assessed engagement > LMS engagement | Student reports more engagement than LMS can measure. Suggests invisible activity: offline study, peer learning, intrinsic motivation. |
-| **Discordance** | LMS engagement > self-assessed engagement | LMS registers activity that does not translate to meaningful engagement. Suggests surface compliance, anxiety-driven clicks, or ritual without intention. |
-
-**Distribution in the synthetic corpus (n = 1,300):**
-
-| Verdict | n | % |
-|---|---|---|
-| Convergence | 547 | 42.1% |
-| Discordance | 426 | 32.8% |
-| Expansion | 327 | 25.2% |
-
-The `meta_inference_rationale` column in `le_jd_enrollment.csv` provides a one-sentence textual rationale per case, citing both the quantitative state and top-3 qualitative themes.
-
----
-
-## 5. Coverage Summary
-
-| LE-JD Component | Covered by | Status |
-|---|---|---|
-| Behavioral Indicators | 10 columns from `engagement_panel_weekly.csv` | ✅ Complete |
-| Behavioral Profile Label (Col 1) | `behavioral_profile` / `behavioral_profile_week` | ✅ Generated by S7 |
-| Latent Engagement State — DBN inputs | 8 columns from `engagement_panel_weekly.csv` | ✅ Complete |
-| Latent Engagement State — proxy output | `engagement_state_modal` (NTILE-3) | ✅ Proxy populated; DBN is next step |
-| Latent Engagement State — DBN output | To be produced by DBN training | ⚙️ Placeholder |
-| Mechanism — themes | `dominant_themes` from LLM survey (S5) | ✅ Synthetic — 1,300 personas |
-| Mechanism — narrative | Q1–Q24 from LLM survey (S5) | ✅ Synthetic — 1,300 personas |
-| Meta-Inference — verdict | `meta_inference_verdict` (rule-based) | ✅ Generated by S7 |
-| Meta-Inference — rationale | `meta_inference_rationale` | ✅ Generated by S7 |
-| Stratification context | 11 columns (module, result, demographics) | ✅ Complete |
-| Data integrity — unique enrollment per persona | Greedy assignment in S6 (TOP_N=30) | ✅ 1,282 unique / 18 flagged `shared_enrollment=True` |
-
----
-
-## 6. Concrete LE-JD Row Example — P0001 (Silvia Greco)
-
-The following is a real populated row from `le_jd_enrollment.csv`:
-
-| LE-JD Field | Value |
-|---|---|
-| **Persona** | P0001 — Silvia Greco |
-| **Archetype** | Resilient Climber |
-| **Enrollment** | `528971_DDD_2013J` (rank-1 match, score 0.988) |
-| **Module / Cohort** | DDD / 2013J |
-| **Final Result** | — *(from OULAD enrollment)* |
-| **n_weeks** | 38 |
-| **Col 1 — Behavioral Profile** | `medium-clicks \| sustained \| early-submitter \| mid-score` |
-| `total_clicks_mean` | — |
-| `streak_max` | — |
-| `assessment_score_mean` | — |
-| **Col 2 — Latent State** | `medium` *(proxy: engagement_state modal)* |
-| **Col 3 — Mechanism** | `offline-study \| resource-constraints \| deadline-driven \| auditory-learning-preference \| competing-responsibilities` |
-| `overall_engagement_self_assessment` | `medium` |
-| **Col 4 — Meta-Inference** | **Convergence** |
-| `meta_inference_rationale` | *LMS engagement (medium) aligns with self-assessed engagement (medium). Themes: offline-study, resource-constraints, deadline-driven.* |
-
----
-
-## 7. How to Reproduce the LE-JD (Step-by-Step)
-
-### Prerequisites — Pipeline must be complete through S6
-
-| Stage | Script | Output | Status |
-|---|---|---|---|
-| S3 | `S3_persona_assembly.py` | `student_personas.csv` (1,300×38) | ✅ |
-| S4 | `S4_generate_prompts.py` | `student_personas_with_prompts.csv` (1,300×40) | ✅ |
-| S5 | `S5_run_llm_survey.py` | `llm_survey_responses.csv` (1,300×27) + `llm_responses/P*.json` | ✅ |
-| S6 | `S6_persona_enrollment_bridge.py` | `persona_enrollment_bridge.csv` (13,000×8) | ✅ |
-
-Also required: `outputs/engagement_panel_weekly.csv` (OULAD quantitative panel, 1,212,577 rows).
-
----
-
-### Step 1 — Run S7 to assemble the artifact
+### Step 1 — Assemble the artifact
 
 ```bash
 cd next_proposal_paper/src_syntetic
@@ -262,76 +165,41 @@ Status : COMPLETE ✓
 
 ---
 
-### Step 2 — Inspect the outputs
+### Step 2 — Outputs
 
-**Enrollment-level LE-JD** (one row per persona, best-match enrollment):
-
-```python
-import pandas as pd
-le = pd.read_csv("outputs/data/synthetic/le_jd_enrollment.csv")
-print(le.shape)          # (1300, 63)
-print(le.columns.tolist())
-le[["persona_id","persona_name","behavioral_profile",
-    "engagement_state_modal","dominant_themes","meta_inference_verdict"]].head()
-```
-
-**Weekly LE-JD** (temporal panel per persona):
-
-```python
-week = pd.read_csv("outputs/data/synthetic/le_jd_weekly.csv")
-print(week.shape)        # (48042, 29)
-# Single persona trajectory
-week[week["persona_id"]=="P0001"].sort_values("week")[
-    ["week","behavioral_profile_week","engagement_state","meta_inference_verdict"]
-]
-```
+| File | Shape | Description |
+|---|---|---|
+| `outputs/data/synthetic/le_jd_enrollment.csv` | 1,300 × 65 | **Primary artifact** — 1 row per persona, all 4 LE-JD columns |
+| `outputs/data/synthetic/le_jd_weekly.csv` | 48,241 × 29 | Temporal artifact — 1 row per persona × week |
+| `outputs/metadata/s7_le_jd_audit.json` | — | Build audit and column manifest |
 
 ---
 
-### Step 3 — Column Schema Reference
+### Step 3 — Column structure
 
-#### `le_jd_enrollment.csv` (63 columns)
+#### `le_jd_enrollment.csv`
 
-**Context (24 cols):**
-`persona_id, persona_name, persona_archetype_label, gender, age, learning_style, risk_level, final_grade, engagement_level, motivation_level, stress_level_label, intervention_type, enrollment_id, code_module, code_presentation, age_band, gender_oulad, final_result, match_score, rank, shared_enrollment, result_match, engagement_match, overall_engagement_self_assessment`
+| LE-JD Column | CSV columns | Note |
+|---|---|---|
+| **Context** (24 cols) | `persona_id`, `persona_name`, `persona_archetype_label`, `enrollment_id`, `code_module`, `code_presentation`, `final_result`, `match_score`, `shared_enrollment`, + demographics | `shared_enrollment = True` flags 18 personas where uniqueness could not be guaranteed |
+| **Col 1 — Behavioral Indicators** (13 cols) | `behavioral_profile` *(label)*, `total_clicks_sum/mean`, `active_days_mean`, `log_clicks_mean`, `click_intensity_mean`, `recency_last`, `streak_max`, `cumulative_clicks_final`, `assessment_score_mean`, `submission_timeliness_mean`, `has_assessment_weeks`, `n_weeks` | |
+| **Col 2 — Latent State** (1 col) | `engagement_state_modal` | Proxy (NTILE-3); replace with DBN output when available |
+| **Col 3 — Mechanism** (25 cols) | `dominant_themes`, `Q1` … `Q24` | |
+| **Col 4 — Meta-Inference** (2 cols) | `meta_inference_verdict`, `meta_inference_rationale` | Convergence / Expansion / Discordance |
 
-> `shared_enrollment = True` flags the 18 personas whose enrollment could not be made unique within the top-30 candidate pool. Their behavioral data may overlap with another persona's.
+#### `le_jd_weekly.csv`
 
-**Col 1 — Behavioral Indicators (13 cols):**
-`behavioral_profile` *(label)*, `total_clicks_sum`, `total_clicks_mean`, `active_days_mean`, `log_clicks_mean`, `click_intensity_mean`, `recency_last`, `streak_max`, `cumulative_clicks_final`, `assessment_score_mean`, `submission_timeliness_mean`, `has_assessment_weeks`, `n_weeks`
-
-**Col 2 — Latent Engagement State (1 col):**
-`engagement_state_modal` ← modal engagement state across all weeks (`low / medium / high`)
-
-**Col 3 — Mechanism (25 cols):**
-`dominant_themes`, `Q1` … `Q24`
-
-**Col 4 — Meta-Inference (2 cols):**
-`meta_inference_verdict` (`Convergence / Expansion / Discordance`), `meta_inference_rationale`
-
-#### `le_jd_weekly.csv` (29 columns)
-
-`persona_id, persona_name, persona_archetype_label, enrollment_id, code_module, code_presentation, week, final_result, final_grade, risk_level, learning_style, intervention_type, match_score` *(context)*  
-`behavioral_profile_week, total_clicks, active_days, log_clicks, click_intensity, recency, streak, cumulative_clicks, assessment_score, submission_timeliness, has_assessment_this_week` *(Col 1)*  
-`engagement_state` *(Col 2)*  
-`dominant_themes, overall_engagement_self_assessment` *(Col 3)*  
-`meta_inference_verdict, meta_inference_rationale` *(Col 4)*
+Same four columns at week granularity: `behavioral_profile_week` (Col 1), `engagement_state` (Col 2), `dominant_themes` (Col 3), `meta_inference_verdict` (Col 4).
 
 ---
 
 ### Step 4 — Replace proxy with DBN output (future)
 
-When the Dynamic Bayesian Network is trained:
+Col 2 is currently populated with `engagement_state_modal`, a NTILE-3 proxy. When the DBN is trained:
 
-1. Run the DBN on `engagement_panel_weekly.csv` using the 8 input columns listed in Section 3.3.
-2. The DBN produces a discrete latent state per `enrollment_id × week`.
-3. Replace `engagement_state_modal` in `le_jd_enrollment.csv` and `engagement_state` in `le_jd_weekly.csv` with the DBN output.
-4. Re-run S7 (or apply the update in-place) to regenerate `meta_inference_verdict` against the true inferred state.
+1. Run the DBN on `engagement_panel_weekly.csv` (input nodes: `log_clicks`, `click_intensity`, `recency`, `streak`, `active_days`, `has_assessment_this_week`, `assessment_score`, `submission_timeliness`).
+2. The DBN emits a discrete latent state per `enrollment_id × week`.
+3. Replace `engagement_state_modal` / `engagement_state` in both LE-JD files with the DBN output.
+4. Re-run S7 to regenerate `meta_inference_verdict` against the true inferred state.
 
-The `engagement_state` column in `engagement_panel_weekly.csv` remains as the validation reference (not the artifact value).
-
----
-
-## 8. Non-Blocking Gap: `assessment_type`
-
-The CSV does not include `assessment_type` (TMA / CMA / Exam). This field would enrich the interpretation of `submission_timeliness` and `assessment_score` within the LE-JD (e.g., a late TMA has a different meaning than a late Exam). The field is available in `raw_assessments` inside the project DuckDB and can be added via a supplemental join step (P6b) without modifying the existing CSV.
+> `engagement_state` in `engagement_panel_weekly.csv` remains as the **validation reference**, not the artifact value.
