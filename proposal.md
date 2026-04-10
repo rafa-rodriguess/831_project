@@ -1,4 +1,4 @@
-# Paper Proposal (Versão Final – Com Referências APA)
+# Paper Proposal (Final Version – With APA References)
 
 ## From Clicks to Constructs: A Mixed-Methods Framework for Modeling Latent Student Engagement Using OULAD Data
 

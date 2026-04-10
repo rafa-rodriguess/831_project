@@ -29,7 +29,9 @@ Output tables
 
 Configuration
 ─────────────
-  TOP_N        : max enrollments per persona  (default 10)
+  TOP_N        : max candidate enrollments per persona  (default 30)
+                 Wider pool allows the greedy unique assignment step to resolve
+                 all 1300 personas to a unique enrollment without repeats.
   MIN_SCORE    : minimum normalised score to accept a match  (default 0.40)
 
 Usage
@@ -45,7 +47,7 @@ import numpy as np
 import pandas as pd
 
 # ── configuration ─────────────────────────────────────────────────────────────
-TOP_N     = 10    # max matching enrollments per persona
+TOP_N     = 30    # candidate enrollments per persona (wider pool for unique assignment)
 MIN_SCORE = 0.40  # minimum normalised score (0–1) to keep a match
 
 # weights (must sum to 10 for easy reasoning)
@@ -274,15 +276,59 @@ for idx, row in p.iterrows():
         print(f"    {idx+1}/1300 …")
 
 bridge = pd.DataFrame(records)
-print(f"    Done. Bridge rows: {len(bridge):,}")
+print(f"    Done. Bridge rows (candidates): {len(bridge):,}")
+print()
+
+# ── [3b] Greedy unique enrollment assignment ──────────────────────────────────
+print("  [3b] Greedy unique assignment (1 enrollment per persona) …")
+bridge_sorted = bridge.sort_values(["persona_id", "rank"])
+used_enrollments: set = set()
+assigned_personas: set = set()
+unique_records = []
+for _, row in bridge_sorted.iterrows():
+    pid = row["persona_id"]
+    eid = row["enrollment_id"]
+    if pid in assigned_personas:
+        continue
+    if eid not in used_enrollments:
+        used_enrollments.add(eid)
+        assigned_personas.add(pid)
+        unique_records.append(row)
+
+bridge_unique = pd.DataFrame(unique_records).reset_index(drop=True)
+bridge_unique["shared_enrollment"] = False
+
+unresolved = set(p["persona_id"].astype(str)) - set(bridge_unique["persona_id"])
+print(f"    Uniquely assigned : {len(bridge_unique)} / 1300 personas")
+print(f"    Not resolved      : {len(unresolved)} (no free enrollment in top-{TOP_N})")
+if unresolved:
+    print(f"    Unresolved IDs    : {sorted(unresolved)[:10]} …")
+
+# Fallback for unresolved: assign best available (rank-1), flag as shared
+if unresolved:
+    print(f"    Fallback: assigning best available (rank-1) to {len(unresolved)} unresolved, flagged shared …")
+    fallback_rows = (
+        bridge[bridge["persona_id"].isin(unresolved)]
+        .sort_values(["persona_id", "rank"])
+        .groupby("persona_id", sort=False)
+        .first()
+        .reset_index()
+    )
+    fallback_rows["shared_enrollment"] = True
+    bridge_unique = pd.concat([bridge_unique, fallback_rows], ignore_index=True)
+    bridge_unique = bridge_unique.sort_values("persona_id").reset_index(drop=True)
+    print(f"    Bridge final size : {len(bridge_unique)} rows (1 per persona, {fallback_rows['shared_enrollment'].sum()} flagged shared)")
+
+print(f"    Rank distribution after unique assignment:")
+print(bridge_unique["rank"].value_counts().sort_index().to_string())
 print()
 
 # ── [4] Coverage audit ────────────────────────────────────────────────────────
 print("  [4] Coverage audit …")
 
-matched_pids   = set(bridge["persona_id"].unique())
+matched_pids   = set(bridge_unique["persona_id"].unique())
 all_pids       = set(p["persona_id"].astype(str))
-truly_unmatched = all_pids - matched_pids  # personas with 0 rows in bridge
+truly_unmatched = all_pids - matched_pids
 
 n_fully_matched  = len(matched_pids)
 n_unmatched      = len(truly_unmatched)
@@ -305,16 +351,16 @@ else:
     print()
 
 # Score distribution
-score_stats = bridge.groupby("rank")["match_score"].agg(["mean", "min", "max"]).round(4)
-print("  Score stats by rank:")
+score_stats = bridge_unique.groupby("rank")["match_score"].agg(["mean", "min", "max"]).round(4)
+print("  Score stats by rank (unique-assigned bridge):")
 print(score_stats.to_string())
 print()
 
-# ── [5] Save ──────────────────────────────────────────────────────────────────
+# ── [5] Save ───────────────────────────────────────────────────────────────────
 print("  [5] Saving …")
-bridge.to_csv(BRIDGE_OUT, index=False)
+bridge_unique.to_csv(BRIDGE_OUT, index=False)
 print(f"    {BRIDGE_OUT}")
-print(f"    Shape: {bridge.shape}")
+print(f"    Shape: {bridge_unique.shape}  (1 unique enrollment per persona)")
 print()
 
 # ── [6] Audit JSON ────────────────────────────────────────────────────────────
@@ -326,17 +372,20 @@ audit = {
     "unmatched"           : n_unmatched,
     "unmatched_ids"       : sorted(truly_unmatched),
     "below_threshold_relaxed": n_below_threshold,
-    "top_n"               : TOP_N,
+    "top_n_candidates"    : TOP_N,
+    "unique_assignment"   : True,
+    "shared_fallback_count": int(bridge_unique["shared_enrollment"].sum()),
     "min_score_threshold" : MIN_SCORE,
-    "bridge_rows"         : len(bridge),
+    "bridge_rows"         : len(bridge_unique),
     "elapsed_s"           : elapsed,
     "score_stats"         : {
-        "mean" : round(float(bridge["match_score"].mean()), 4),
-        "min"  : round(float(bridge["match_score"].min()),  4),
-        "max"  : round(float(bridge["match_score"].max()),  4),
-        "p25"  : round(float(bridge["match_score"].quantile(0.25)), 4),
-        "p75"  : round(float(bridge["match_score"].quantile(0.75)), 4),
+        "mean" : round(float(bridge_unique["match_score"].mean()), 4),
+        "min"  : round(float(bridge_unique["match_score"].min()),  4),
+        "max"  : round(float(bridge_unique["match_score"].max()),  4),
+        "p25"  : round(float(bridge_unique["match_score"].quantile(0.25)), 4),
+        "p75"  : round(float(bridge_unique["match_score"].quantile(0.75)), 4),
     },
+    "rank_distribution"   : bridge_unique["rank"].value_counts().sort_index().to_dict(),
     "below_threshold_details": [u for u in unmatched if "below MIN_SCORE" in u.get("reason","")],
     "outputs": {
         "bridge_csv" : str(BRIDGE_OUT),

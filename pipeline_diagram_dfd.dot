@@ -1,0 +1,365 @@
+/**
+ * pipeline_diagram_dfd.dot  -  DFD MACRO VIEW (Level-1)
+ * =======================================================
+ * Data Flow Diagram for the paper:
+ *   "From Clicks to Constructs: A Mixed-Methods Framework for
+ *    Modeling Latent Student Engagement Using OULAD Data"
+ *
+ * DFD conventions (Yourdon/DeMarco notation):
+ *   Double-border box  = External Entity  (data source or sink)
+ *   Ellipse            = Process          (numbered, data transformation)
+ *   Striped box        = Data Store       (persisted data, DS prefix)
+ *   Labeled arrows     = Data Flows
+ *
+ * Render:
+ *   dot -Tpng pipeline_diagram_dfd.dot -o pipeline_diagram_dfd.png
+ *   dot -Tsvg pipeline_diagram_dfd.dot -o pipeline_diagram_dfd.svg
+ */
+
+digraph dfd_macro {
+
+    graph [
+        rankdir   = TB
+        fontname  = "Helvetica"
+        fontsize  = 14
+        splines   = polyline
+        nodesep   = 1.0
+        ranksep   = 1.1
+        bgcolor   = "#FFFFFF"
+        label     = "From Clicks to Constructs\nData Flow Diagram  (DFD  -  Level 1)"
+        labelloc  = t
+        labeljust = c
+        pad       = 0.6
+    ]
+
+    node [ fontname="Helvetica" fontsize=12 ]
+    edge [ fontname="Helvetica" fontsize=10 arrowsize=0.9 color="#333333" ]
+
+
+    /* ====================================================================
+     *  EXTERNAL ENTITIES  (double-border rectangles = peripheries 2)
+     * ==================================================================== */
+
+    OULAD [
+        label     = "OULAD\nOpen University\nLearning Analytics\nDataset"
+        shape     = box
+        style     = "filled"
+        fillcolor = "#D5F5E3"
+        color     = "#1E8449"
+        penwidth  = 2.5
+        peripheries = 2
+        fontsize  = 12
+        margin    = "0.30,0.20"
+    ]
+
+    EXT_DATASETS [
+        label     = "External Research Datasets\n(2 public sources)\n\nZenodo: 14,003 students\n(behavioral + academic)\nKaggle: 1,300 students\n(psychological constructs)"
+        shape     = box
+        style     = "filled"
+        fillcolor = "#FEF5E7"
+        color     = "#D68910"
+        penwidth  = 2.5
+        peripheries = 2
+        fontsize  = 12
+        margin    = "0.30,0.20"
+    ]
+
+    CLAUDE [
+        label     = "Anthropic Claude API\n(claude-opus-4-5)\n\nExternal LLM service\nSimulates student interviews\nin first person"
+        shape     = box
+        style     = "filled"
+        fillcolor = "#FDEDEC"
+        color     = "#C0392B"
+        penwidth  = 2.5
+        peripheries = 2
+        fontsize  = 12
+        margin    = "0.30,0.20"
+    ]
+
+    RESEARCHER [
+        label     = "Researcher\n/ Paper Output"
+        shape     = box
+        style     = "filled"
+        fillcolor = "#F4ECF7"
+        color     = "#6C3483"
+        penwidth  = 2.5
+        peripheries = 2
+        fontsize  = 12
+        margin    = "0.30,0.20"
+    ]
+
+
+    /* ====================================================================
+     *  PROCESSES   (numbered ellipses)
+     * ==================================================================== */
+
+    P1 [
+        label     = "1.0\nOULAD Data Processing\n\nsrc/  P0 - P6\nIngestion - Panel Construction\nIndicators - Demographics\nValidated Export"
+        shape     = ellipse
+        style     = "filled"
+        fillcolor = "#EBF5FB"
+        color     = "#1A5276"
+        penwidth  = 2.0
+        fontsize  = 12
+        margin    = "0.35,0.25"
+    ]
+
+    P2 [
+        label     = "2.0\nSynthetic Persona Generation\n\nsrc_syntetic/  S0 - S3\nIngest + Decode + Normalize\nCross-Dataset Clustering\nPersona Assembly + Archetypes"
+        shape     = ellipse
+        style     = "filled"
+        fillcolor = "#FEF9E7"
+        color     = "#7D6608"
+        penwidth  = 2.0
+        fontsize  = 12
+        margin    = "0.35,0.25"
+    ]
+
+    P3 [
+        label     = "3.0\nLLM Interview Survey\n\nsrc_syntetic/  S4 - S5\nPrompt Generation (Q1-Q24)\nParallel API Execution\nJSON Schema Validation"
+        shape     = ellipse
+        style     = "filled"
+        fillcolor = "#FADBD8"
+        color     = "#922B21"
+        penwidth  = 2.5
+        fontsize  = 12
+        margin    = "0.35,0.25"
+    ]
+
+    P4 [
+        label     = "4.0\nCross-Dataset Alignment\n\nsrc_syntetic/  S6\nPersona to Enrollment Matching\nWeighted Similarity Scoring\n(gender, result, engagement,\nexam, activity)"
+        shape     = ellipse
+        style     = "filled"
+        fillcolor = "#FEF9E7"
+        color     = "#7D6608"
+        penwidth  = 2.0
+        fontsize  = 12
+        margin    = "0.35,0.25"
+    ]
+
+    P5 [
+        label     = "5.0\nMixed-Methods Integration\n\nDBN Probabilistic Modeling\n+ LE-JD Convergent Analysis\nBehavioral patterns meet\nqualitative mechanisms"
+        shape     = ellipse
+        style     = "filled"
+        fillcolor = "#F4ECF7"
+        color     = "#6C3483"
+        penwidth  = 2.5
+        fontsize  = 12
+        margin    = "0.35,0.25"
+    ]
+
+
+    /* ====================================================================
+     *  DATA STORES  (box with dashed border = open-rectangle style)
+     * ==================================================================== */
+
+    DS1 [
+        label     = "DS1  OULAD Intermediate Database\nengagement.duckdb\nRaw tables: studentVle, studentInfo,\nstudentAssessment, assessments, courses"
+        shape     = box
+        style     = "filled,dashed"
+        fillcolor = "#F2F3F4"
+        color     = "#566573"
+        penwidth  = 2.0
+        fontsize  = 11
+        margin    = "0.30,0.15"
+    ]
+
+    DS2 [
+        label     = "DS2  Quantitative Panel\nengagement_panel_weekly.csv\nPerson x Week  -  22 columns\nClickstream + Assessment + Demographics\nEngagement State {low, medium, high}"
+        shape     = box
+        style     = "filled,dashed"
+        fillcolor = "#D5F5E3"
+        color     = "#1E8449"
+        penwidth  = 2.0
+        fontsize  = 11
+        margin    = "0.30,0.15"
+    ]
+
+    DS3 [
+        label     = "DS3  Synthetic Personas\nstudent_personas.csv\n1,300 personas  -  37 columns\nBridge constructs + 8 Archetypes\n(risk level x motivation x stress)"
+        shape     = box
+        style     = "filled,dashed"
+        fillcolor = "#FAD7A0"
+        color     = "#7D6608"
+        penwidth  = 2.0
+        fontsize  = 11
+        margin    = "0.30,0.15"
+    ]
+
+    DS4 [
+        label     = "DS4  LLM Survey Responses\nllm_survey_responses.csv + 1,300 JSON files\nQ1-Q24 answers in first person per persona\nQualitative evidence strand"
+        shape     = box
+        style     = "filled,dashed"
+        fillcolor = "#FADBD8"
+        color     = "#922B21"
+        penwidth  = 2.0
+        fontsize  = 11
+        margin    = "0.30,0.15"
+    ]
+
+    DS5 [
+        label     = "DS5  Enrollment Bridge\npersona_enrollment_bridge.csv\nPersona to OULAD enrollment mapping\nWeighted similarity score (0-1)\nUp to 10 matches per persona"
+        shape     = box
+        style     = "filled,dashed"
+        fillcolor = "#E8DAEF"
+        color     = "#6C3483"
+        penwidth  = 2.0
+        fontsize  = 11
+        margin    = "0.30,0.15"
+    ]
+
+    DS6 [
+        label     = "DS6  Metadata and Audit Logs\npipeline_audit.json  environment_summary.json\ncolumn_schema.json  s*_audit.json\nFull provenance trail per stage"
+        shape     = box
+        style     = "filled,dashed"
+        fillcolor = "#F8F9F9"
+        color     = "#7F8C8D"
+        penwidth  = 1.5
+        fontsize  = 10
+        margin    = "0.25,0.12"
+    ]
+
+
+    /* ====================================================================
+     *  DATA FLOWS
+     * ==================================================================== */
+
+    /* External Entity -> Process 1.0 */
+    OULAD -> P1 [
+        label    = " 5 raw CSVs\n(clicks, demographics,\nassessments, courses)"
+        color    = "#1E8449"
+        penwidth = 2.0
+    ]
+
+    /* Process 1.0 <-> DS1 (DuckDB read/write) */
+    P1 -> DS1 [
+        label    = " raw tables loaded"
+        color    = "#1A5276"
+        penwidth = 1.8
+    ]
+    DS1 -> P1 [
+        label    = " intermediate tables\n(panel_base, indicators,\nassessment, demographics)"
+        color    = "#1A5276"
+        penwidth = 1.5
+        style    = dashed
+    ]
+
+    /* Process 1.0 -> DS2 (final export) */
+    P1 -> DS2 [
+        label    = " validated panel export\n(22 columns)"
+        color    = "#1E8449"
+        penwidth = 2.5
+    ]
+
+    /* Process 1.0 -> DS6 (audit) */
+    P1 -> DS6 [
+        label    = " stage audit logs"
+        color    = "#7F8C8D"
+        penwidth = 1.2
+        style    = dashed
+    ]
+
+    /* External Entity -> Process 2.0 */
+    EXT_DATASETS -> P2 [
+        label    = " Zenodo CSV (14,003 rows)\nKaggle CSV (1,300 rows)"
+        color    = "#D68910"
+        penwidth = 2.0
+    ]
+
+    /* Process 2.0 -> DS3 */
+    P2 -> DS3 [
+        label    = " 1,300 personas\n+ archetype labels"
+        color    = "#7D6608"
+        penwidth = 2.5
+    ]
+
+    /* Process 2.0 -> DS6 */
+    P2 -> DS6 [
+        label    = " stage audit logs"
+        color    = "#7F8C8D"
+        penwidth = 1.2
+        style    = dashed
+    ]
+
+    /* DS3 -> Process 3.0 */
+    DS3 -> P3 [
+        label    = " persona profiles\n+ archetype labels"
+        color    = "#7D6608"
+        penwidth = 2.0
+    ]
+
+    /* Process 3.0 <-> Claude API (external) */
+    P3 -> CLAUDE [
+        label    = " 1,300 one-shot prompts\n(persona profile + Q1-Q24)"
+        color    = "#C0392B"
+        penwidth = 2.5
+    ]
+    CLAUDE -> P3 [
+        label    = " JSON responses\n(Q1-Q24 per persona\nanswered in first person)"
+        color    = "#C0392B"
+        penwidth = 2.5
+    ]
+
+    /* Process 3.0 -> DS4 */
+    P3 -> DS4 [
+        label    = " 1,300 JSON files\n+ aggregated flat CSV"
+        color    = "#922B21"
+        penwidth = 2.5
+    ]
+
+    /* Process 3.0 -> DS6 */
+    P3 -> DS6 [
+        label    = " API audit log"
+        color    = "#7F8C8D"
+        penwidth = 1.2
+        style    = dashed
+    ]
+
+    /* DS2 + DS3 -> Process 4.0 */
+    DS2 -> P4 [
+        label    = " OULAD enrollment\nrecords"
+        color    = "#1E8449"
+        penwidth = 2.0
+    ]
+    DS3 -> P4 [
+        label    = " persona\nprofiles"
+        color    = "#7D6608"
+        penwidth = 2.0
+    ]
+
+    /* Process 4.0 -> DS5 */
+    P4 -> DS5 [
+        label    = " persona-enrollment\nalignment scores"
+        color    = "#6C3483"
+        penwidth = 2.5
+    ]
+
+    /* All DS -> Process 5.0 */
+    DS2 -> P5 [
+        label    = " quantitative panel\n(DBN input, RQ1-RQ2)"
+        color    = "#1E8449"
+        penwidth = 2.0
+    ]
+    DS4 -> P5 [
+        label    = " qualitative mechanisms\n(RQ3)"
+        color    = "#922B21"
+        penwidth = 2.0
+    ]
+    DS3 -> P5 [
+        label    = " persona archetypes\n(RQ3)"
+        color    = "#7D6608"
+        penwidth = 2.0
+    ]
+    DS5 -> P5 [
+        label    = " behavioral-qualitative\nalignment (RQ4)"
+        color    = "#6C3483"
+        penwidth = 2.0
+    ]
+
+    /* Process 5.0 -> Researcher */
+    P5 -> RESEARCHER [
+        label    = " LE-JD Report\nDBN engagement trajectories\n+ Qualitative mechanisms\nAnswers RQ1 RQ2 RQ3 RQ4"
+        color    = "#6C3483"
+        penwidth = 3.0
+    ]
+}

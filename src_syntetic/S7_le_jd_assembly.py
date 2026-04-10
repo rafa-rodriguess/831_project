@@ -162,9 +162,15 @@ print(f"    quali    : {quali.shape}")
 print(f"    bridge   : {bridge.shape}")
 print(f"    personas : {personas.shape}")
 
-# Keep only rank-1 matches (best enrollment per persona)
-bridge1 = bridge[bridge["rank"] == 1].copy()
-print(f"    bridge-1 : {bridge1.shape}  (rank-1 only)")
+# Keep rank-1 matches if legacy multi-row bridge; otherwise use as-is (1 row per persona)
+if bridge["persona_id"].nunique() == len(bridge):
+    # New format: bridge already has 1 unique enrollment per persona
+    bridge1 = bridge.copy()
+    print(f"    bridge-1 : {bridge1.shape}  (1 unique enrollment per persona — greedy assignment)")
+else:
+    # Legacy format: multiple ranks per persona, use rank-1
+    bridge1 = bridge[bridge["rank"] == 1].copy()
+    print(f"    bridge-1 : {bridge1.shape}  (rank-1 only — legacy bridge)")
 print()
 
 # ── [2] Load quant — only enrollments we need ─────────────────────────────────
@@ -223,7 +229,7 @@ print("  [4] Assembling enrollment-level LE-JD …")
 
 # Join: persona → bridge-1 → quant_agg + quali
 le_jd = (
-    bridge1[["persona_id", "enrollment_id", "match_score", "result_match", "engagement_match"]]
+    bridge1[["persona_id", "enrollment_id", "match_score", "result_match", "engagement_match", "rank", "shared_enrollment"]]
     .merge(enroll_agg, on="enrollment_id", how="left")
     .merge(
         quali[["persona_id", "overall_engagement_self_assessment", "dominant_themes"]
@@ -270,7 +276,7 @@ CONTEXT = ["persona_id", "persona_name", "persona_archetype_label",
            "stress_level_label", "intervention_type",
            "enrollment_id", "code_module", "code_presentation",
            "age_band", "gender_oulad", "final_result",
-           "match_score", "result_match", "engagement_match",
+           "match_score", "rank", "shared_enrollment", "result_match", "engagement_match",
            "overall_engagement_self_assessment"]
 
 ordered_cols = CONTEXT + COL1 + COL2 + COL3 + COL4

@@ -1,20 +1,20 @@
 {
   "status": "COMPLETE",
-  "elapsed_s": 2.1,
+  "elapsed_s": 2.2,
   "enrollment_level": {
     "rows": 1300,
-    "cols": 63,
+    "cols": 65,
     "output": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/le_jd_enrollment.csv"
   },
   "weekly_level": {
-    "rows": 48042,
+    "rows": 48241,
     "cols": 29,
     "output": "/Users/rafars/rafael.dasilva@eastern.edu - Google Drive/My Drive/DOUTORADO/Eastern/dropout_test-1/next_proposal_paper/outputs/data/synthetic/le_jd_weekly.csv"
   },
   "meta_inference_distribution": {
-    "Convergence": 551,
+    "Convergence": 547,
     "Discordance": 426,
-    "Expansion": 323
+    "Expansion": 327
   },
   "le_jd_columns": {
     "Col1_Behavioral_Indicators": [
@@ -63,6 +63,8 @@
       "gender_oulad",
       "final_result",
       "match_score",
+      "rank",
+      "shared_enrollment",
       "result_match",
       "engagement_match",
       "overall_engagement_self_assessment"
